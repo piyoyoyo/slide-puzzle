@@ -4,8 +4,9 @@ window.addEventListener('load', () => {
    */
   const init = () => {
     // NOTE: 空文字と1~8の数字が格納された配列を生成する
-    let arr = ['']
-    for(i = 0; i < 8; i++) {
+    // FIXME: これ再利用したい
+    let arr = [''];
+    for (i = 0; i < 8; i++) {
       arr.push((i + 1).toString());
     }
 
@@ -100,8 +101,19 @@ window.addEventListener('load', () => {
    * クリアしたかどうか判定する関数
    * 
    */
-  const isSolved = () => {
+  const isSolved = (arr) => {
+    answer = [];
+    for (i = 0; i < 8; i++) {
+      answer.push((i + 1).toString());
+    }
+    answer.push('');
 
+    if (JSON.stringify(answer) === JSON.stringify(arr)) {
+      setTimeout(() => {
+        // FIXME: なんか違う気もする
+        window.alert('clear');
+      }, 1000);
+    }
   }
 
   /**
@@ -142,7 +154,7 @@ window.addEventListener('load', () => {
   const addEventListenerClick = (arr) => {
     // NOTE: クラス名にtileがつくDOM一つ一つにクリックイベントを追加
     const tileElem = document.querySelectorAll('.tile');
-    tileElem.forEach(function(elem) {
+    tileElem.forEach((elem) => {
       elem.addEventListener('click', function() {
         // NOTE: 引数に渡された配列（パズルの並びを表す）においてクリックされた数字が格納されている要素番号を変数に代入
         let i = arr.indexOf(this.textContent);
@@ -152,15 +164,15 @@ window.addEventListener('load', () => {
         if (i <= 5 && arr[i + 3] == '') {
           // NOTE: 下方向へ移動
           j = i + 3;
-        } else if(i >= 3 && arr[i - 3] == '') {
+        } else if (i >= 3 && arr[i - 3] == '') {
           // NOTE: クリックされたパズルが下2行かつクリックされたパズルの上のマスが空白だったら
           // NOTE: 上方向へ移動
           j = i - 3;
-        } else if(i % 3 != 2 && arr[i + 1] == '') {
+        } else if (i % 3 != 2 && arr[i + 1] == '') {
           // NOTE: クリックされたパズルが左2列かつクリックされたパズルの右のマスが空白だったら
           // NOTE: 右方向へ移動
           j = i + 1;
-        } else if(i % 3 != 0 && arr[i - 1] == '') {
+        } else if (i % 3 != 0 && arr[i - 1] == '') {
           // NOTE: クリックされたパズルが右2列かつクリックされたパズルの左のマスが空白だったら
           // NOTE: 左方向へ移動
           j = i - 1;
@@ -173,6 +185,8 @@ window.addEventListener('load', () => {
         swap(i, j, arr);
         // NOTE: パズルを再描画
         render(arr);
+
+        isSolved(arr);
       });
     });
   }

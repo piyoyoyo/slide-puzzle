@@ -136,7 +136,7 @@ window.addEventListener('load', () => {
       tileWrapper.className = 'tile-wrapper';
 
       let tile = document.createElement('div');
-      tile.className = element != '' ? 'tile tile-' + element : 'tile tile-none';
+      tile.className = element != '' ? 'tile tile-' + element : 'tile-none';
       tile.textContent = element;
 
       tileWrapper.appendChild(tile);
@@ -196,8 +196,4 @@ window.addEventListener('load', () => {
    * メイン処理
    */
   init();
-  // NOTE: パズルのリセット
-  document.getElementById('js-reset-puzzle').addEventListener('click', () => {
-    init();
-  });
 });

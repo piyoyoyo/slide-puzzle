@@ -9,6 +9,10 @@ body {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
+  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 90%) inset;
+  padding: 2px;
+  background-color: white;
+  border-radius: 3px;
 }
 .tile-wrapper {
   width: 100px;
@@ -23,12 +27,13 @@ body {
   height: 100%;
   line-height: 97px;
   text-align: center;
-  border: 1px solid #333;
-  border-radius: 5px;
+  border: 1px solid #fff;
+  border-radius: 3px;
   font-size: 26px;
   color: rgba(255, 255, 255, 0);
   cursor: pointer;
   background-size: contain;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 20%);
 }
 
 .tile-1 {
@@ -65,23 +70,4 @@ body {
 }
 .tile-none {
   background: rgb(228, 228, 228);
-}
-
-.reset {
-  margin: 0 auto;
-  width: 300px;
-  text-align: center;
-  cursor: pointer;
-  background: rgb(255, 146, 146);
-  padding: 10px 0;
-  border-bottom: 3px solid rgb(185, 104, 104);
-  margin-top: 30px;
-  font-size: 16px;
-}
-.reset:active {
-  transform: translateY(3px);
-  border: none;
-}
-.reset:focus {
-  outline: none;
 }

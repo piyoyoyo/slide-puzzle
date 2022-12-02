@@ -5,10 +5,11 @@ window.addEventListener('load', () => {
   const init = () => {
     // NOTE: 空文字と1~8の数字が格納された配列を生成する
     // FIXME: これ再利用したい
-    let arr = [''];
+    let arr = [];
     for (i = 0; i < 8; i++) {
       arr.push((i + 1).toString());
     }
+    arr.push('');
 
     // 生成した配列をシャッフルする
     shuffle(arr);

@@ -5,11 +5,10 @@ window.addEventListener('load', () => {
   const init = () => {
     // NOTE: 空文字と1~8の数字が格納された配列を生成する
     // FIXME: これ再利用したい
-    let arr = [];
-    for (i = 0; i < 8; i++) {
+    let arr = [''];
+    for (i = 0; i < 9; i++) {
       arr.push((i + 1).toString());
     }
-    arr.push('');
 
     // 生成した配列をシャッフルする
     shuffle(arr);
@@ -55,21 +54,28 @@ window.addEventListener('load', () => {
    * @returns boolean 解決可能なパズルならtrue
    */
   const canSolved = (arr) => {
+    console.log('arr', arr);
+    if ((arr[0] == '' && arr[1] == 1) || arr[0] == 1) {
+      // NOTE: 最終的に左上にはまるピースが、左上の1マスまたはそのすぐ下のマスにあって上が空きマスでないと解けない
+      console.log('解ける可能性がある！処理続行');
+    } else {
+      return false;
+    }
+    console.log('きた？');
     // NOTE: 配列内の空白の要素番号を格納
     const blank_index = arr.indexOf('');
     // NOTE: 縦の距離の計算
-    vertical_dist = Math.floor(((arr.length - 1) - blank_index) / Math.sqrt(arr.length));
+    const vertical_dist = Math.floor(((arr.length - 1) - blank_index) / Math.sqrt(arr.length));
     // NOTE: 横の距離の計算
-    horizontal_dist = ((arr.length - 1) - blank_index) % Math.sqrt(arr.length);
+    const horizontal_dist = ((arr.length - 1) - blank_index) % Math.sqrt(arr.length);
     // NOTE: 縦と横を足し合わせる
     const dist = vertical_dist + horizontal_dist;
 
     // NOTE: 答えの配列を生成する
-    answer = [];
-    for (i = 0; i < 8; i++) {
+    let answer = [''];
+    for (i = 0; i < 9; i++) {
       answer.push((i + 1).toString());
     }
-    answer.push('');
 
     // NOTE: 入れ替えが起きた回数を記録する
     let count = 0;
@@ -92,6 +98,7 @@ window.addEventListener('load', () => {
 
     // NOTE 判定処理
     if (count % 2 === dist % 2) { // 解決可能なパズルなら
+      console.log(answer);
       return true;
     } else { // 解決不可能なパズルなら
       return false;
@@ -103,11 +110,10 @@ window.addEventListener('load', () => {
    * 
    */
   const isSolved = (arr) => {
-    answer = [];
-    for (i = 0; i < 8; i++) {
+    let answer = [''];
+    for (i = 0; i < 9; i++) {
       answer.push((i + 1).toString());
     }
-    answer.push('');
 
     if (JSON.stringify(answer) === JSON.stringify(arr)) {
       setTimeout(() => {
@@ -161,19 +167,30 @@ window.addEventListener('load', () => {
         let i = arr.indexOf(this.textContent);
         // NOTE: クリックされたパズルの移動先を格納する変数
         let j;
-        // NOTE: クリックされたパズルが上2行かつクリックされたパズルの下のマスが空白だったら
-        if (i <= 5 && arr[i + 3] == '') {
+
+        if (i == 0 && arr[i + 1] == '') {
+          // NOTE: クリックされたパズルが左上の1マスで、かつクリックされたパズルの下のマスが空白だったら
+          // NOTE: 下方向へ移動
+          j = i + 1;
+        } else if (i == 1 && arr[i - 1] == '') {
+          // NOTE: クリックされたパズルが左上の1マスのすぐ下のマスで、かつクリックされたパズルの上のますが空白だったら
+          // NOTE: 上方向へ移動
+          j = i - 1;
+        } else if (i <= 6 && arr[i + 3] == '') {
+          // NOTE: クリックされたパズルが左上から数えて7枚目までで、かつクリックされたパズルの下のマスが空白だったら
           // NOTE: 下方向へ移動
           j = i + 3;
-        } else if (i >= 3 && arr[i - 3] == '') {
-          // NOTE: クリックされたパズルが下2行かつクリックされたパズルの上のマスが空白だったら
+        } else if ((i >= 4 && arr[i - 3] == '')) {
+          // NOTE: 下2行かつクリックされたパズルの上のマスが空白だったら
           // NOTE: 上方向へ移動
           j = i - 3;
-        } else if (i % 3 != 2 && arr[i + 1] == '') {
+        } else if ((i == 1 || i == 2 || i == 4 || i == 5 || i == 7 || i == 8) && arr[i + 1] == '') {
+        // } else if (i % 3 != 2 && arr[i + 1] == '') {
           // NOTE: クリックされたパズルが左2列かつクリックされたパズルの右のマスが空白だったら
           // NOTE: 右方向へ移動
           j = i + 1;
-        } else if (i % 3 != 0 && arr[i - 1] == '') {
+        } else if ((i == 2 || i == 3 || i == 5 || i == 6 || i == 8 || i == 9) && arr[i - 1] == '') {
+        // } else if (i % 3 != 0 && arr[i - 1] == '') {
           // NOTE: クリックされたパズルが右2列かつクリックされたパズルの左のマスが空白だったら
           // NOTE: 左方向へ移動
           j = i - 1;

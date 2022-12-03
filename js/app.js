@@ -208,8 +208,9 @@ window.addEventListener('load', () => {
 
   const sound = () => {
     setTimeout(() => {
-      document.getElementById('audio').currentTime = 0; //連続クリックに対応
-      document.getElementById('audio').play(); //クリックしたら音を再生
+      const audio = new Audio('/audio/click.mp3');
+      audio.currentTime = 0; //連続クリックに対応
+      audio.play();
     }, 100);
   }
 

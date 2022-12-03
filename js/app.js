@@ -199,19 +199,9 @@ window.addEventListener('load', () => {
         swap(i, j, arr);
         // NOTE: パズルを再描画
         render(arr);
-        sound();
-
         isSolved(arr);
       });
     });
-  }
-
-  const sound = () => {
-    setTimeout(() => {
-      const audio = new Audio('/audio/click.mp3');
-      audio.currentTime = 0; //連続クリックに対応
-      audio.play();
-    }, 100);
   }
 
   /**

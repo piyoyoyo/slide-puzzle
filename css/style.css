@@ -1,9 +1,98 @@
+@import url(//fonts.googleapis.com/css?family=Vibur);
+
 body {
+  /* background-color: rgba(0, 0, 0, 100%); */
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/**
+ * logo
+ */
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  width: 198px;
+  height: 90px;
+  background-color: rgba(0, 0, 0, 100%);
+  position: relative;
+  top: -5px;
+  right: -2px;
+}
+
+.logo {
+  text-align: center;
+  margin: auto;
+  user-select: none;
+}
+
+.logo b {
+  font: 400 3vh "Vibur";
+  color: #fee;
+  /* text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #ff4444, 0 0 0.5em #ff4444, 0 0 0.1em #ff4444, 0 10px 3px #000; */
+  text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #9932cc, 0 0 0.5em #9932cc, 0 0 0.1em #9932cc, 0 10px 3px #000;
+}
+
+.logo b span{
+  animation: blink linear infinite 2s;
+}
+
+.logo b span:nth-of-type(2){
+  animation: blink linear infinite 3s;
+}
+
+@keyframes blink {
+  78% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  79%{
+    color: #333;
+  }
+  80% {
+    
+    text-shadow: none;
+  }
+  81% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  82% {
+    color: #333;
+    text-shadow: none;
+  }
+  83% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+  92% {
+    color: #333;
+    text-shadow: none;
+  }
+  92.5% {
+    color: inherit;
+    text-shadow: inherit;
+  }
+}
+
+.sample {
+  display: block;
+  width: 80px;
+  height: 80px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin-right: 20px;
+  background-image: url(/img/puzzle-01/sample.jpeg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
 .panel {
   width: 300px;
   height: 300px;
@@ -12,39 +101,37 @@ body {
   display: flex;
   flex-wrap: wrap;
   box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 90%) inset;
-  padding: 102px 2px 2px;
+  padding: 2px;
   background-color: white;
-  border-radius: 3px;
+  border-radius: 0 3px 3px 3px;
 }
+
 .panel::before {
   content: "";
   display: block;
-  width: 201px;
-  height: 99px;
-  background-color: #fff;
+  width: 103px;
+  height: 100px;
+  background-image: #fff;
   box-sizing: border-box;
   border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
   position: absolute;
-  top: 1px;
-  right: 1px;
-  box-shadow: -1px 1px 2px 1px rgb(0 0 0 / 30%);
-  border: 4px solid black;
+  top: -100px;
+  left: 0;
+  /* box-shadow: -1px 1px 2px 1px rgb(0 0 0 / 30%); */
+  box-shadow: 0px 0px 11px 3px rgba(0, 0, 0, 90%) inset;
 }
+
 .panel::after {
   content: "";
   display: block;
-  width: 80px;
+  width: 102px;
   height: 80px;
-  background: #fff;
-  box-sizing: border-box;
-  border-radius: 3px;
-  position: relative;
-  top: -392px;
-  right: -210px;
-  background-image: url(/img/puzzle-01/sample.jpeg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: right;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 13%, rgba(255, 255, 255, 1) 54%, rgba(255, 255, 255, 1) 91%, rgba(255, 255, 255, 0));
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 35%, rgba(255, 255, 255, 0) 66%, rgba(255, 255, 255, 0));
 }
 
 .tile-wrapper {
@@ -53,11 +140,14 @@ body {
   box-sizing: border-box;
   padding-right: 3px;
   padding-bottom: 3px;
+  position: relative;
+  z-index: 1;
 }
 
 .panel > *:first-child {
   position: absolute;
-  top: 2px;
+  z-index: 1;
+  top: -98px;
 }
 
 .tile {
@@ -75,35 +165,27 @@ body {
 }
 
 .tile-1 {
-  /* background: rgb(254, 255, 201); */
   background-image: url(/img/puzzle-01/01.jpeg);
 }
 .tile-2 {
-  /* background: rgb(207, 255, 195); */
   background-image: url(/img/puzzle-01/02.jpeg);
 }
 .tile-3 {
-  /* background: rgb(200, 238, 247); */
   background-image: url(/img/puzzle-01/03.jpeg);
 }
 .tile-4 {
-  /* background: rgb(238, 200, 247); */
   background-image: url(/img/puzzle-01/04.jpeg);
 }
 .tile-5 {
-  /* background: rgb(200, 205, 247); */
   background-image: url(/img/puzzle-01/05.jpeg);
 }
 .tile-6 {
-  /* background: rgb(255, 197, 164); */
   background-image: url(/img/puzzle-01/06.jpeg);
 }
 .tile-7 {
-  /* background: rgb(135, 253, 106); */
   background-image: url(/img/puzzle-01/07.jpeg);
 }
 .tile-8 {
-  /* background: rgb(250, 140, 226); */
   background-image: url(/img/puzzle-01/08.jpeg);
 }
 .tile-9 {

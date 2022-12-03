@@ -116,10 +116,10 @@ window.addEventListener('load', () => {
     }
 
     if (JSON.stringify(answer) === JSON.stringify(arr)) {
+      const clearElem = document.getElementById('clear');
       setTimeout(() => {
-        // FIXME: なんか違う気もする
-        window.alert('clear');
-      }, 1000);
+        clearElem.classList.add("is-clear");
+      }, 700);
     }
   }
 

@@ -54,14 +54,11 @@ window.addEventListener('load', () => {
    * @returns boolean 解決可能なパズルならtrue
    */
   const canSolved = (arr) => {
-    console.log('arr', arr);
     if ((arr[0] == '' && arr[1] == 1) || arr[0] == 1) {
       // NOTE: 最終的に左上にはまるピースが、左上の1マスまたはそのすぐ下のマスにあって上が空きマスでないと解けない
-      console.log('解ける可能性がある！処理続行');
     } else {
       return false;
     }
-    console.log('きた？');
     // NOTE: 配列内の空白の要素番号を格納
     const blank_index = arr.indexOf('');
     // NOTE: 縦の距離の計算
@@ -98,7 +95,6 @@ window.addEventListener('load', () => {
 
     // NOTE 判定処理
     if (count % 2 === dist % 2) { // 解決可能なパズルなら
-      console.log(answer);
       return true;
     } else { // 解決不可能なパズルなら
       return false;

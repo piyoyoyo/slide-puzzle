@@ -203,10 +203,18 @@ window.addEventListener('load', () => {
         swap(i, j, arr);
         // NOTE: パズルを再描画
         render(arr);
+        sound();
 
         isSolved(arr);
       });
     });
+  }
+
+  const sound = () => {
+    setTimeout(() => {
+      document.getElementById('audio').currentTime = 0; //連続クリックに対応
+      document.getElementById('audio').play(); //クリックしたら音を再生
+    }, 100);
   }
 
   /**

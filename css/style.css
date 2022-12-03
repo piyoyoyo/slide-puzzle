@@ -2,14 +2,51 @@
 
 body {
   /* background-color: rgba(0, 0, 0, 100%); */
+  margin: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+#loading {
+  width: 100vw;
+  height: 100vh;
+  transition: all 0.7s;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  margin: 200px auto;
+  background-color: #9932cc;
+  border-radius: 100%;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+/* loading animation */
+@keyframes sk-scaleout {
+  0% {
+    transform: scale(0);
+  } 100% {
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
 #main {
   position: relative;
+  margin: 10px;
 }
 
 #clear {

@@ -1,5 +1,11 @@
 window.addEventListener('load', () => {
   /**
+   * ローディングアニメーション用
+   */
+  const spinner = document.getElementById('loading');
+  spinner.classList.add('loaded');
+
+  /**
    * 初期化用関数
    */
   const init = () => {

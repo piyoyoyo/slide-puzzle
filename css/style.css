@@ -273,3 +273,10 @@ body {
 .tile-none {
   background: rgb(228, 228, 228);
 }
+
+.copyright {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 10px;
+  font-family: 'Play', sans-serif;
+}

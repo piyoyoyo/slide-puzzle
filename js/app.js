@@ -163,11 +163,87 @@ window.addEventListener('load', () => {
   const addEventListenerClick = (arr) => {
     // NOTE: クラス名にtileがつくDOM一つ一つにクリックイベントを追加
     const tileElem = document.querySelectorAll('.tile');
+    // NOTE: タッチデバイスかどうか判定する
+    const touchable = window.ontouchstart;
+    const touchPoints = navigator.maxTouchPoints;
+    // NOTE: タッチデバイス用
+    // タップ時の誤動作を防ぐためのスワイプ時の処理を実行しない最小距離
+    const threshold = 30;
+    // スワイプ開始時の座標
+    let startX = 0;
+    let startY = 0;
+    // スワイプ終了時の座標
+    let endX = 0;
+    let endY = 0;
+    // 交換対象のパネル番号
+    let panexIndex;
+
     tileElem.forEach((elem) => {
-      elem.addEventListener('click', function() {
-        let i = arr.indexOf(this.textContent);
-        moveTile(i, arr);
-      });
+
+      if(touchable !== undefined && touchPoints > 0) {
+        elem.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          // スワイプ開始時の座標をクリア
+          startX = 0;
+          startY = 0;
+          // スワイプ終了時の座標をクリア
+          endX = 0;
+          endY = 0;
+
+          panelIndex = arr.indexOf(this.textContent);
+
+          startX = e.touches[0].pageX;
+          startY = e.touches[0].pageY;
+        });
+    
+        elem.addEventListener('touchmove', function(e) {
+          endX = e.changedTouches[0].pageX;
+          endY = e.changedTouches[0].pageY;
+        });
+    
+        elem.addEventListener('touchend', function(e) {
+          // スワイプ終了時にx軸とy軸の移動量を取得
+          const distanceX = endX - startX;
+          const distanceY = endY - startY;
+    
+          let direction = '';
+          // 左右のスワイプ距離の方が上下より長い && 小さなスワイプは検知しないようにする
+          if (Math.abs(distanceX) > Math.abs(distanceY) && Math.abs(distanceX) > threshold) {
+            // 水平方向のスワイプ
+            if (distanceX > 0) {
+              translateX = 40;
+              direction = 'right';
+            } else {
+              translateX = -40;
+              direction = 'left';
+            }
+            translateY = 0;
+          // 上下のスワイプ距離の方が左右より長い && 小さなスワイプは検知しないようにする
+          } else if (Math.abs(distanceY) > Math.abs(distanceX) && Math.abs(distanceY) > threshold) {
+            // 垂直方向のスワイプ
+            if (distanceY > 0) {
+              translateY = 40;
+              direction = 'down';
+            } else {
+              translateY = -40;
+              direction = 'up';
+            }
+            translateX = 0;
+          }
+
+          const availableDirection = checkAvailableDirection(panelIndex, arr);
+          const targetIndex = availableDirection['j'];
+
+          if (availableDirection[direction]) {
+            swapTile(panelIndex, targetIndex, arr);
+          }
+        });
+      } else {
+        elem.addEventListener('click', function() {
+          let i = arr.indexOf(this.textContent);
+          moveTile(i, arr);
+        });
+      }
     });
   }
 
@@ -199,6 +275,81 @@ window.addEventListener('load', () => {
     render(arr);
     isSolved(arr);
   };
+
+  /**
+   * タイルを動かす関数（タッチデバイス用）
+   * @param {Number} i
+   * @param {Number} j
+   * @param {Array} arr
+   */
+  const swapTile = (i, j, arr) => {
+    swap(i, j, arr);
+    render(arr);
+    isSolved(arr);
+  };
+
+  /**
+   * タイルを動かせる方向をチェックする関数（タッチデバイス用）
+   * @param {Number} i
+   */
+  const checkAvailableDirection = (i, arr) => {
+    if (i == 0 && arr[i + 1] == '') {
+      return {
+        'up': false,
+        'right': false,
+        'down': true,
+        'left': false,
+        'j': i + 1,
+      };
+    } else if (i == 1 && arr[i - 1] == '') {
+      return {
+        'up': true,
+        'right': false,
+        'down': false,
+        'left': false,
+        'j': i - 1,
+      };
+    } else if (i <= 6 && arr[i + 3] == '') {
+      return {
+        'up': false,
+        'right': false,
+        'down': true,
+        'left': false,
+        'j': i + 3,
+      };
+    } else if (i >= 4 && arr[i - 3] == '') {
+      return {
+        'up': true,
+        'right': false,
+        'down': false,
+        'left': false,
+        'j': i - 3,
+      }
+    } else if ((i % 3 == 1 || i % 3 == 2) && arr[i + 1] == '') {
+      return {
+        'up': false,
+        'right': true,
+        'down': false,
+        'left': false,
+        'j': i + 1,
+      }
+    } else if ((i % 3 == 2 || i % 3 == 0) && arr[i - 1] == '') {
+      return {
+        'up': false,
+        'right': false,
+        'down': false,
+        'left': true,
+        'j': i - 1,
+      }
+    } else {
+      return {
+        'up': false,
+        'right': false,
+        'down': false,
+        'left': false,
+      };
+    }
+  }
 
   /**
    * メイン処理

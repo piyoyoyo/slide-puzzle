@@ -241,6 +241,7 @@ body {
   cursor: pointer;
   background-size: contain;
   box-shadow: 0px 0px 2px 1px rgb(0 0 0 / 30%);
+  user-select: none;
 }
 
 .tile-1 {

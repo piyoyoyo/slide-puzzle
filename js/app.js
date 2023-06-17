@@ -172,13 +172,13 @@ window.addEventListener('load', () => {
   }
 
   /**
-   * タイルを動かす関数
-   * @param {Number} i 
-   * @param {Array} arr 
+   * タイルを動かす関数（非タッチデバイス用）
+   * @param {Number} i
+   * @param {Array} arr
    */
   const moveTile = (i, arr) => {
     let j;
-  
+
     if (i == 0 && arr[i + 1] == '') {
       j = i + 1;
     } else if (i == 1 && arr[i - 1] == '') {
@@ -194,7 +194,7 @@ window.addEventListener('load', () => {
     } else {
       return;
     }
-  
+
     swap(i, j, arr);
     render(arr);
     isSolved(arr);

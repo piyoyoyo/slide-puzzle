@@ -165,48 +165,40 @@ window.addEventListener('load', () => {
     const tileElem = document.querySelectorAll('.tile');
     tileElem.forEach((elem) => {
       elem.addEventListener('click', function() {
-        // NOTE: 引数に渡された配列（パズルの並びを表す）においてクリックされた数字が格納されている要素番号を変数に代入
         let i = arr.indexOf(this.textContent);
-        // NOTE: クリックされたパズルの移動先を格納する変数
-        let j;
-
-        if (i == 0 && arr[i + 1] == '') {
-          // NOTE: クリックされたパズルが左上の1マスで、かつクリックされたパズルの下のマスが空白だったら
-          // NOTE: 下方向へ移動
-          j = i + 1;
-        } else if (i == 1 && arr[i - 1] == '') {
-          // NOTE: クリックされたパズルが左上の1マスのすぐ下のマスで、かつクリックされたパズルの上のますが空白だったら
-          // NOTE: 上方向へ移動
-          j = i - 1;
-        } else if (i <= 6 && arr[i + 3] == '') {
-          // NOTE: クリックされたパズルが左上から数えて7枚目までで、かつクリックされたパズルの下のマスが空白だったら
-          // NOTE: 下方向へ移動
-          j = i + 3;
-        } else if ((i >= 4 && arr[i - 3] == '')) {
-          // NOTE: 下2行かつクリックされたパズルの上のマスが空白だったら
-          // NOTE: 上方向へ移動
-          j = i - 3;
-        } else if ((i % 3 == 1 || i % 3 == 2) && arr[i + 1] == '') {
-          // NOTE: クリックされたパズルが左2列かつクリックされたパズルの右のマスが空白だったら
-          // NOTE: 右方向へ移動
-          j = i + 1;
-        } else if ((i % 3 == 2 || i % 3 == 0) && arr[i - 1] == '') {
-          // NOTE: クリックされたパズルが右2列かつクリックされたパズルの左のマスが空白だったら
-          // NOTE: 左方向へ移動
-          j = i - 1;
-        } else {
-          // NOTE: クリックされたパズルが移動させられなかったら
-          // NOTE: なにもしない
-          return;
-        }
-        // NOTE: パズルを移動
-        swap(i, j, arr);
-        // NOTE: パズルを再描画
-        render(arr);
-        isSolved(arr);
+        moveTile(i, arr);
       });
     });
   }
+
+  /**
+   * タイルを動かす関数
+   * @param {Number} i 
+   * @param {Array} arr 
+   */
+  const moveTile = (i, arr) => {
+    let j;
+  
+    if (i == 0 && arr[i + 1] == '') {
+      j = i + 1;
+    } else if (i == 1 && arr[i - 1] == '') {
+      j = i - 1;
+    } else if (i <= 6 && arr[i + 3] == '') {
+      j = i + 3;
+    } else if (i >= 4 && arr[i - 3] == '') {
+      j = i - 3;
+    } else if ((i % 3 == 1 || i % 3 == 2) && arr[i + 1] == '') {
+      j = i + 1;
+    } else if ((i % 3 == 2 || i % 3 == 0) && arr[i - 1] == '') {
+      j = i - 1;
+    } else {
+      return;
+    }
+  
+    swap(i, j, arr);
+    render(arr);
+    isSolved(arr);
+  };
 
   /**
    * メイン処理
